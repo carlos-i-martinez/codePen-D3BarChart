@@ -5,9 +5,7 @@ req.send();
 req.onload=function(){
         json=JSON.parse(req.responseText);
         var html = "";
-        // Add your code below this line
         plotData();       
-        // Add your code above this line
       };
 
 function plotData() {
@@ -21,7 +19,6 @@ function plotData() {
     const xMin = new Date(d3.min(dataset1, (d,i) => new Date(d[0])));
     const xMax = new Date(d3.max(dataset1, (d,i) => new Date(d[0])));
     xMax.setMonth(xMax.getMonth() + 3);
-    //alert(xMin)
     
     const xScale = d3.scaleTime()
                      .domain([xMin,xMax])
@@ -50,14 +47,12 @@ function plotData() {
        .attr("class","bar")
        .attr("data-date", (d, i) => dataset1[i][0])
        .attr("data-gdp", (d, i) => dataset1[i][1])
-//       .attr("data-gdp", (d, i) => d[1])
        .attr("x", (d, i) => padding + i*rw)
        .attr("y", (d, i) => yScale(d[1]))
        .attr("width", rw)
        .attr("height",(d) => h - yScale(d[1]) - padding )
        .attr("fill", "navy")
        .on("mouseover", function(d,i){
-            //alert(d[0])
             myTool.transition().duration(200).style('opacity', 0.9);
             myTool
               .html("<strong>DATE: </strong> "+d[0]+" <br><strong>GDP: </strong> "+d[1])
@@ -66,16 +61,13 @@ function plotData() {
               .style("top", d3.event.pageY - 30 + "px")
               .style("display", "flex")
               .style("opacity", 1)
-              
-          })
+        })
     	 .on("mouseout", function(d) { 
             myTool.style("display", "none");
           });
 
     const xAxis = d3.axisBottom(xScale);
-    // Add your code below this line
     const yAxis = d3.axisLeft(yScale);
-    // Add your code above this line
   
     svgC.append("g")
        .attr("id","x-axis")
@@ -100,6 +92,4 @@ svgC.append("text")
     .attr("dy", ".5em")
     .attr("transform", "rotate(-90)")
     .text("Gross Domestic Product(billions of dollars)");  
-
-
 }
